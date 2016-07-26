@@ -41,6 +41,14 @@ static unsigned int ath9k_debug = ATH_DBG_DEFAULT;
 module_param_named(debug, ath9k_debug, uint, 0);
 MODULE_PARM_DESC(debug, "Debugging mask");
 
+unsigned int ath9k_modparam_rx_int_mitigation = true;
+module_param_named(rx_int_mitigation, ath9k_modparam_rx_int_mitigation, int, 0444);
+MODULE_PARM_DESC(rx_int_mitigation, "Enable RX interrupt mitigation");
+
+unsigned int ath9k_modparam_tx_int_mitigation = false;
+module_param_named(tx_int_mitigation, ath9k_modparam_tx_int_mitigation, int, 0444);
+MODULE_PARM_DESC(tx_int_mitigation, "Enable TX interrupt mitigation");
+
 int ath9k_modparam_nohwcrypt;
 module_param_named(nohwcrypt, ath9k_modparam_nohwcrypt, int, 0444);
 MODULE_PARM_DESC(nohwcrypt, "Disable hardware encryption");
@@ -649,6 +657,8 @@ static int ath9k_init_softc(u16 devid, struct ath_softc *sc,
 	common->cachelsz = csz << 2; /* convert to bytes */
 
 	/* Initializes the hardware for all supported chipsets */
+        ah->config.rx_intr_mitigation = ath9k_modparam_rx_int_mitigation;
+        ah->config.tx_intr_mitigation = ath9k_modparam_tx_int_mitigation;
 	ret = ath9k_hw_init(ah);
 	if (ret)
 		goto err_hw;

@@ -35,6 +35,8 @@ struct ath_vif;
 
 extern struct ieee80211_ops ath9k_ops;
 extern int ath9k_modparam_nohwcrypt;
+extern unsigned int ath9k_modparam_rx_int_mitigation;
+extern unsigned int ath9k_modparam_tx_int_mitigation;
 extern int ath9k_led_blink;
 extern bool is_ath9k_unloaded;
 extern int ath9k_use_chanctx;

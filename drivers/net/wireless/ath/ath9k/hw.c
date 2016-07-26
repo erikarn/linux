@@ -388,8 +388,6 @@ static void ath9k_hw_init_config(struct ath_hw *ah)
 	ah->config.cwm_ignore_extcca = false;
 	ah->config.analog_shiftreg = 1;
 
-	ah->config.rx_intr_mitigation = true;
-
 	if (AR_SREV_9300_20_OR_LATER(ah)) {
 		ah->config.rimt_last = 500;
 		ah->config.rimt_first = 2000;

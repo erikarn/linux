@@ -30,6 +30,14 @@ int htc_modparam_nohwcrypt;
 module_param_named(nohwcrypt, htc_modparam_nohwcrypt, int, 0444);
 MODULE_PARM_DESC(nohwcrypt, "Disable hardware encryption");
 
+unsigned int ath9k_modparam_rx_int_mitigation = true;
+module_param_named(rx_int_mitigation, ath9k_modparam_rx_int_mitigation, int, 0444);
+MODULE_PARM_DESC(rx_int_mitigation, "Enable RX interrupt mitigation");
+
+unsigned int ath9k_modparam_tx_int_mitigation = false;
+module_param_named(tx_int_mitigation, ath9k_modparam_tx_int_mitigation, int, 0444);
+MODULE_PARM_DESC(tx_int_mitigation, "Enable TX interrupt mitigation");
+
 static int ath9k_htc_btcoex_enable;
 module_param_named(btcoex_enable, ath9k_htc_btcoex_enable, int, 0444);
 MODULE_PARM_DESC(btcoex_enable, "Enable wifi-BT coexistence");
@@ -663,7 +671,8 @@ static int ath9k_init_priv(struct ath9k_htc_priv *priv,
 	 */
 	ath_read_cachesize(common, &csz);
 	common->cachelsz = csz << 2; /* convert to bytes */
-
+        ah->config.rx_intr_mitigation = ath9k_modparam_rx_int_mitigation;
+        ah->config.tx_intr_mitigation = ath9k_modparam_tx_int_mitigation;
 	ret = ath9k_hw_init(ah);
 	if (ret) {
 		ath_err(common,
